@@ -74,14 +74,14 @@ export default function IndexScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Uncompleted Tasks</Text>
+      <Text style={styles.header}>To do Tasks</Text>
       <FlatList
         data={uncompleted}
         renderItem={renderUncompleted}
         keyExtractor={(item) => item.id}
       />
 
-      <Text style={styles.taskText}>All your Tasks are listed here</Text>
+      <Text style={styles.header}>All your Tasks are listed here</Text>
       <FlatList
         data={completedTasks}
         renderItem={renderCompleted}
@@ -104,13 +104,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#000",
   },
   task: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
   },
-  header: { fontSize: 24, fontWeight: "bold" },
+  header: { fontSize: 24, fontWeight: "bold", color: "#fff" },
   taskText: {
     flex: 1,
     color: "#fff",
@@ -127,5 +128,6 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 5,
+    backgroundColor: "#fff",
   },
 });
