@@ -74,28 +74,32 @@ export default function IndexScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>To do Tasks</Text>
-      <FlatList
-        data={uncompleted}
-        renderItem={renderUncompleted}
-        keyExtractor={(item) => item.id}
-      />
-
-      <Text style={styles.header}>All your Tasks are listed here</Text>
-      <FlatList
-        data={completedTasks}
-        renderItem={renderCompleted}
-        keyExtractor={(item) => item.id}
-      />
-
-      <Text style={styles.header}>Add a new Task below</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter task here"
-        value={taskText}
-        onChangeText={setTaskText}
-      />
-      <Button title="Add Task" onPress={handleAdd} />
+      <View>
+        <Text style={styles.header}>To do Tasks</Text>
+        <FlatList
+          data={uncompleted}
+          renderItem={renderUncompleted}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+      <View>
+        <Text style={styles.header}>All your Tasks are listed here</Text>
+        <FlatList
+          data={completedTasks}
+          renderItem={renderCompleted}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+      <View>
+        <Text style={styles.header}>Add a new Task below</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter task here"
+          value={taskText}
+          onChangeText={setTaskText}
+        />
+        <Button title="Add Task" onPress={handleAdd} />
+      </View>
     </View>
   );
 }
