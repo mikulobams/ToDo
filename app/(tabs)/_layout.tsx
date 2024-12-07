@@ -4,43 +4,6 @@ import { useState } from "react";
 import Index from ".";
 
 export default function TabLayout() {
-  const [tasks, setTasks] = useState([
-    {
-      id: "1",
-      text: "Put nappies in the bag before tomorrow",
-      completed: false,
-    },
-
-    {
-      id: "2",
-      text: "Learn how to drive",
-      completed: false,
-    },
-  ]);
-
-  const addTask = (taskText: string) => {
-    setTasks([
-      ...tasks,
-      {
-        id: Date.now().toString(),
-        text: taskText,
-        completed: false,
-      },
-    ]);
-  };
-
-  const toggleCompletion = (taskId: string) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === taskId ? { ...task, completed: !task.completed } : task
-      )
-    );
-  };
-
-  const deleteTask = (taskId: string) => {
-    setTasks(tasks.filter((task) => task.id !== taskId));
-  };
-
   return (
     <Tabs
       screenOptions={{
@@ -67,39 +30,6 @@ export default function TabLayout() {
             />
           ),
         }}
-        initialParams={{
-          tasks: tasks,
-          toggleCompletion: toggleCompletion,
-          deleteTask: deleteTask,
-        }}
-      />
-      <Tabs.Screen
-        name="completed"
-        options={{
-          title: "Completed Tasks",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "checkmark-circle" : "checkmark-circle-outline"}
-              color={color}
-              size={24}
-            />
-          ),
-        }}
-        initialParams={{ tasks: tasks }}
-      />
-      <Tabs.Screen
-        name="add"
-        options={{
-          title: "Add New Task",
-          tabBarIcon: ({ color, focused }) => (
-            <Ionicons
-              name={focused ? "add" : "add-outline"}
-              color={color}
-              size={24}
-            />
-          ),
-        }}
-        initialParams={{ tasks: tasks, addTask: addTask }}
       />
       <Tabs.Screen
         name="about"

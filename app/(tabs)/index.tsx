@@ -1,32 +1,76 @@
-import { Text, View, StyleSheet, Button, FlatList } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  FlatList,
+  TextInput,
+} from "react-native";
 import { Link } from "expo-router";
-import { useState } from "react";
+import React, { useState } from "react";
 
-interface Task {
-  id: string;
-  text: string;
-  completed: boolean;
-}
+export default function IndexScreen() {
+  const [tasks, setTasks] = useState([
+    {
+      id: "1",
+      text: "Put nappies in the bag before tomorrow",
+      completed: false,
+    },
 
-export type Props = {
-  tasks: Task[];
-  toggleCompletion: (taskId: string) => void;
-  deleteTask: (taskId: string) => void;
-};
+    {
+      id: "2",
+      text: "Learn how to drive",
+      completed: false,
+    },
+  ]);
 
-export default function IndexScreen({
-  tasks,
-  toggleCompletion,
-  deleteTask,
-}: Props) {
+  const toggleCompletion = (taskId: string) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === taskId ? { ...task, completed: !task.completed } : task
+      )
+    );
+  };
+
+  const deleteTask = (taskId: string) => {
+    setTasks(tasks.filter((task) => task.id !== taskId));
+  };
+
   const uncompleted = tasks.filter((task) => !task.completed);
-  const renderUncompleted = ({ item }: { item: Task }) => (
+  const renderUncompleted = ({ item }: any) => (
     <View style={styles.task}>
       <Text style={styles.taskText}>{item.text}</Text>
       <Button title="Complete" onPress={() => toggleCompletion(item.id)} />
       <Button title="Delete" onPress={() => deleteTask(item.id)} />
     </View>
   );
+
+  const completedTasks = tasks.filter((task) => task.completed);
+  const renderCompleted = ({ item }: any) => (
+    <View style={styles.task}>
+      <Text style={styles.taskText}>{item.text}</Text>
+    </View>
+  );
+
+  const [taskText, setTaskText] = useState("");
+
+  const handleAdd = () => {
+    if (taskText.trim()) {
+      addTask(taskText);
+      setTaskText("");
+    }
+  };
+
+  const addTask = (taskText: string) => {
+    setTasks([
+      ...tasks,
+      {
+        id: Date.now().toString(),
+        text: taskText,
+        completed: false,
+      },
+    ]);
+  };
 
   return (
     <View style={styles.container}>
@@ -36,6 +80,22 @@ export default function IndexScreen({
         renderItem={renderUncompleted}
         keyExtractor={(item) => item.id}
       />
+
+      <Text style={styles.taskText}>All your Tasks are listed here</Text>
+      <FlatList
+        data={completedTasks}
+        renderItem={renderCompleted}
+        keyExtractor={(item) => item.id}
+      />
+
+      <Text style={styles.header}>Add a new Task below</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Enter task here"
+        value={taskText}
+        onChangeText={setTaskText}
+      />
+      <Button title="Add Task" onPress={handleAdd} />
     </View>
   );
 }
@@ -60,5 +120,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textDecorationLine: "underline",
     color: "#fff",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    marginBottom: 10,
+    borderRadius: 5,
   },
 });
