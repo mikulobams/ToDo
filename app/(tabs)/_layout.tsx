@@ -66,7 +66,11 @@ export default function TabLayout() {
               size={24}
             />
           ),
-          tasks: { tasks },
+        }}
+        initialParams={{
+          tasks: tasks,
+          toggleCompletion: toggleCompletion,
+          deleteTask: deleteTask,
         }}
       />
       <Tabs.Screen
@@ -81,6 +85,7 @@ export default function TabLayout() {
             />
           ),
         }}
+        initialParams={{ tasks: tasks }}
       />
       <Tabs.Screen
         name="add"
@@ -94,6 +99,7 @@ export default function TabLayout() {
             />
           ),
         }}
+        initialParams={{ tasks: tasks, addTask: addTask }}
       />
       <Tabs.Screen
         name="about"
